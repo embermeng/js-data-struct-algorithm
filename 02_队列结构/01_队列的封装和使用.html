@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装队列</title>
+</head>
+
+<body>
+    <script>
+        // 封装队列类
+        class Queue {
+            // 属性
+            items = []
+
+            /* 
+                方法：
+                    1、enqueue(el)：向队列尾部添加一个（或多个新的项）
+                    2、dequeue()：移除队列的第一项，并返回被移除的元素
+                    3、front()：返沪队列中第一个元素，队列不变
+                    4、isEmpty()：如果队列中不包含元素，返回true，否则false
+                    5、size()：返回队列包含的元素个数
+                    6、toString()：将队列转换成字符串内容
+            */
+            // 1、向队列尾部添加一个（或多个新的项）
+            enqueue(el) {
+                this.items.push(el)
+            }
+            // 2、移除队列的第一项，并返回被移除的元素
+            dequeue() {
+                return this.items.shift()
+            }
+            // 3、返沪队列中第一个元素，队列不变
+            front() {
+                return this.items[0]
+            }
+            // 4、判断队列是否为空
+            isEmpty() {
+                return this.items.length === 0
+            }
+            // 5、返回队列包含的元素个数
+            size() {
+                return this.items.length
+            }
+            // 6、将队列转换成字符串内容
+            toString() {
+                let res = ''
+                this.items.forEach((item) => {
+                    if (item instanceof Object) {
+                        item = JSON.stringify(item)
+                    }
+                    res += item + ' '
+                })
+                return res
+            }
+        }
+
+        // 使用队列
+        let queue = new Queue()
+
+        queue.enqueue({a: 1})
+        queue.enqueue({b: 1})
+        queue.enqueue({c: 1})
+        queue.dequeue()
+        console.log(queue.toString());
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栈的封装</title>
+</head>
+
+<body>
+    <script>
+        // 封装栈类
+        class Stack {
+            // 栈中的属性
+            items = []
+
+            /* 
+                栈的操作：
+                    1、push(el)：添加一个新元素到栈顶位置
+                    2、pop()：移除栈顶元素，同时返回被移除的元素
+                    3、peek()：返回栈顶的元素，不对栈做任何修改
+                    4、isEmpty()：如果栈里没有任何元素就返回true，否则返回false
+                    5、size()：返回栈里的元素个数。这个方法和数组的length属性类似
+                    6、toString()：将栈结构的内容以字符串形式返回
+            */
+            // 1、将元素压入栈
+            push(el) {
+                this.items.push(el)
+            }
+            // 2、从栈中取出元素
+            pop() {
+                return this.items.pop()
+            }
+            // 3、返回栈顶的元素
+            peek() {
+                return this.items[this.items.length - 1]
+            }
+
+            // 4、判断栈是否为空
+            isEmpty() {
+                return this.items.length === 0
+            }
+
+            // 5、返回栈里的元素个数
+            size() {
+                return this.items.length
+            }
+
+            // 6、将栈结构的内容以字符串形式返回
+            toString() {
+                let res = ''
+                this.items.forEach((item) => {
+                    if (item instanceof Object) {
+                        item = JSON.stringify(item)
+                    }
+                    res += item + ' '
+                })
+                return res
+            }
+        }
+
+        // 使用栈
+        let stack = new Stack()
+        // console.log(stack.toString());
+
+        // 将十进制转成二进制----使用到栈
+        function dec2bin(decNum) {
+            let stack = new Stack()
+            // 循环
+            while (decNum > 0) {
+                // 获取余数，放入栈
+                stack.push(decNum % 2)
+                // 获取整除后的结果，用于下次运算
+                decNum = Math.floor(decNum / 2)
+            }
+            // 从栈中取出0和1
+            let binStr = ''
+            while (!stack.isEmpty()) {
+                binStr += stack.pop()
+            }
+            return binStr
+        }
+
+        let bin = dec2bin(100)
+        console.log(bin);
+    </script>
+</body>
+
+</html>
