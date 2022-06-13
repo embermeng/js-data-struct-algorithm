@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 封装优先级队列
+        class PriorityQueue {
+            items = []
+
+            // 实现插入方法
+            enqueue(el, priority) {
+                // 1、创建插入的对象
+                const newEl = { el, priority }
+
+                // 2、判断队列是否为空
+                if (this.items.length === 0) {
+                    this.items.push(newEl)
+                } else {
+                    // 3、比较数据优先级
+                    let added = false
+                    for (let i = 0; i < this.items.length; i++) {
+                        if (newEl.priority < this.items[i].priority) {
+                            this.items.splice(i, 0, newEl)
+                            added = true
+                            break
+                        }
+                    }
+                    if (!added) {
+                        this.items.push(newEl)
+                    }
+                }
+            }
+            // 2、移除队列的第一项，并返回被移除的元素
+            dequeue() {
+                return this.items.shift()
+            }
+            // 3、返沪队列中第一个元素，队列不变
+            front() {
+                return this.items[0]
+            }
+            // 4、判断队列是否为空
+            isEmpty() {
+                return this.items.length === 0
+            }
+            // 5、返回队列包含的元素个数
+            size() {
+                return this.items.length
+            }
+            // 6、将队列转换成字符串内容
+            toString() {
+                let res = ''
+                this.items.forEach((item) => {
+                    if (item instanceof Object) {
+                        item = JSON.stringify(item)
+                    }
+                    res += item + ' '
+                })
+                return res
+            }
+        }
+
+        const pq = new PriorityQueue()
+
+        pq.enqueue('a', 10)
+        pq.enqueue('b', 20)
+        pq.enqueue('c', 5)
+        pq.enqueue('d', 200)
+
+        console.log(pq);
+    </script>
+</body>
+
+</html>

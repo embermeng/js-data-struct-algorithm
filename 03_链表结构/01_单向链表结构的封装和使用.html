@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 封装链表类
+        class LinkedList {
+            // 头节点
+            head = null
+            // 记录链表长度
+            length = 0
+            // 创建一个新节点的方法
+            createNode(data) {
+                return { data, next: null }
+            }
+            /* 
+                链表常见操作：
+                    1. append(el): 向链表尾部添加一个新的项
+                    2. insert(position, el): 向链表的特定位置插入一个新的项
+                    3. get(position): 获取对应位置的元素
+                    4. indexOf(el): 返回元素在链表的索引，如果没有该元素返回-1
+                    5. update(position): 修改某个位置的元素
+                    6. removeAt(position): 从链表的特定位置移除一项
+                    7. remove(el): 从链表中移除一项
+                    8. isEmpty(): 链表没有元素返回true，有就返回false
+                    9. size(): 返回链表长度
+                    10. toString(): 只输出元素的值
+            */
+            // 1. 向链表尾部添加一个新的项
+            append(el) {
+                // 创建新节点
+                let newNode = this.createNode(el)
+                // 判断添加的是否是第一个节点
+                if (this.length === 0) {
+                    this.head = newNode
+                } else {
+                    let cur = this.head
+                    while (cur.next) {
+                        cur = cur.next
+                    }
+                    cur.next = newNode
+                }
+                this.length += 1
+            }
+
+            // 2. 只输出元素的值
+            toString() {
+                // 判断链表有没有元素
+                if (this.length === 0) {
+                    return null
+                } else {
+                    let cur = this.head
+                    let resStr = ''
+                    // 遍历拼接结果
+                    /* while (cur.next) {
+                        if (cur.data instanceof Object) {
+                            cur.data = JSON.stringify(cur.data)
+                        }
+                        resStr += cur.data + ' '
+                        cur = cur.next
+                        // 判断如果下一个节点是最后一个节点，就直接拼接
+                        if (!cur.next) {
+
+                        }
+                    } */
+                    for (let i = 0; i < this.length; i++) {
+                        if (cur.data instanceof Object) {
+                            cur.data = JSON.stringify(cur.data)
+                        }
+                        resStr += cur.data + ' '
+                        cur = cur.next
+                    }
+                    return resStr
+                }
+            }
+        }
+
+        const linkedlist = new LinkedList()
+
+        linkedlist.append('a')
+        linkedlist.append({ name: "张三", age: 20 })
+        linkedlist.append({ name: "李四", age: 30 })
+        linkedlist.append(1000)
+        linkedlist.append(2000)
+
+
+        console.log(linkedlist);
+    </script>
+</body>
+
+</html>
