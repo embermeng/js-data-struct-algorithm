@@ -198,7 +198,7 @@
                         return true
                     } else {
                         for (let i = 0; i < this.length; i++) {
-                            // 如果下个节点的值和给定值相等，就删除下个节点
+                            // 如果节点的值和给定值相等，就删除节点
                             if (JSON.stringify(el) === JSON.stringify(cur.data)) {
                                 cur.prev.next = cur.next
                                 cur.next.prev = cur.prev
