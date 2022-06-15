@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 封装集合类
+        class Set {
+            items = {}
+            /* 
+                常见操作：
+                    1. add(val): 向集合添加一个新的项
+                    2. remove(val): 从集合移除一个值
+                    3. has(val): 如果值在集合中，返回true，否则false
+                    4. clear(): 移除集合所有项
+                    5. size(): 返回集合所包含元素的数量
+                    6. values(): 返回一个包含集合中所有值的数组
+            */
+            // 1. 向集合添加一个新的项
+            add(val) {
+                // 判断当前集合中是否已经包含该元素
+                if (this.has(val)) {
+                    return false
+                }
+                this.items[val] = val
+                return true
+            }
+            // 2. 从集合移除一个值
+            remove(val) {
+                // 判断当前集合中是否已经包含该元素
+                if (!this.has(val)) {
+                    return false
+                }
+                // 将元素从属性中删除
+                delete this.items[val]
+                return true
+            }
+            // 3. 如果值在集合中，返回true，否则false
+            has(val) {
+                return this.items.hasOwnProperty(val)
+            }
+            // 4. 移除集合所有项
+            clear() {
+                this.items = {}
+            }
+            // 5. 返回集合所包含元素的数量
+            size() {
+                return Object.keys(this.items).length
+            }
+            // 6. 返回一个包含集合中所有值的数组
+            values() {
+                return Object.keys(this.items)
+            }
+
+            // 集合间操作
+            // 并集
+            union(another) {
+                // another: 另一个集合对象
+                // 1. 创建新的集合
+                let unionSet = new Set()
+                // 2. 将当前集合所有元素添加到新集合
+                let values = this.values()
+                values.forEach(item => unionSet.add(item))
+                // 3. 取出另一个集合的元素，直接加到新集合
+                values = another.values()
+                values.forEach(item => unionSet.add(item))
+                return unionSet
+            }
+            // 交集
+            intersection(another) {
+                let intersectionSet = new Set()
+                let oldValues = this.values(), newValues = another.values()
+                oldValues.forEach((item) => {
+                    if (newValues.includes(item)) intersectionSet.add(item)
+                })
+                return intersectionSet
+            }
+            // 差集
+            difference (another) {
+                let differenceSet = new Set()
+                let oldValues = this.values(), newValues = another.values()
+                oldValues.forEach((item) => {
+                    if (!newValues.includes(item)) differenceSet.add(item)
+                })
+                return differenceSet
+            }
+            // 子集
+            subset(another) {
+                let oldValues = this.values(), newValues = another.values()
+                if (oldValues.length > newValues.length) return false
+                for (let i = 0; i < oldValues.length; i++) {
+                    if (!newValues.includes(oldValues[i])) {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+        let set = new Set()
+        let set2 = new Set()
+        let set3 = new Set()
+        set.add('a')
+        set.add('b')
+        set.add('c')
+
+        set2.add('c')
+        set2.add('x')
+        set2.add('y')
+        set2.add('z')
+
+        set3.add('c')
+        set3.add('d')
+        set3.add('e')
+        set3.add('x')
+        set3.add('y')
+        set3.add('z')
+
+        console.log(set.union(set2));
+        console.log(set.intersection(set2));
+        console.log(set.difference(set2));
+        console.log(set2.subset(set3));
+    </script>
+</body>
+
+</html>
