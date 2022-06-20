@@ -35,8 +35,51 @@
 
                 return index
             }
-        
+            // 插入和修改操作
+            put(key, value) {
+                // 1. 根据key获取索引值，目的：将数据插入到对应的位置
+                const index = this.hashFun(key, this.limit)
+                // 2. 根据索引值取出bucket。需要判断该索引值下有没有桶，没有就创建并放置在该位置。
+                let bucket = this.storage[index]
+                if (!bucket) {
+                    // 没有桶，创建桶并直接执行插入操作
+                    bucket = []
+                    this.storage[index] = bucket
+                }
+                // 有桶
+                // 3. 判断新增还是修改原来的值。
+                for (let i = 0; i < bucket.length; i++) {
+                    if (bucket[i][0] === key) {
+                        // 修改值
+                        bucket[i][1] = value
+                        return true
+                    }
+                }
+                // 新增数据
+                bucket.push([key, value])
+                this.count += 1
+            }
+            // 获取操作
+            get(key) {
+                // 线性查找bucket中每个key是否等于传入的key，有就返回value，没有返回null
+                const index = this.hashFun(key)
+                let bucket = this.storage[index]
+                if (!bucket) {
+                    // 没有桶，返回null
+                    return null
+                }
+                for (let i = 0; i < bucket.length; i++) {
+                    if (bucket[i][0] === key) {
+                        return bucket[i][1]
+                    }
+                }
+                return null
+            }
         }
+
+        let table = new HashTable()
+        table.put('age', 20)
+        console.log(table);
     </script>
 </body>
 
