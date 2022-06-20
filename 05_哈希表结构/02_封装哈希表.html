@@ -57,12 +57,12 @@
                 }
                 // 新增数据
                 bucket.push([key, value])
-                this.count += 1
+                this.count ++
             }
             // 获取操作
             get(key) {
                 // 线性查找bucket中每个key是否等于传入的key，有就返回value，没有返回null
-                const index = this.hashFun(key)
+                const index = this.hashFun(key, this.limit)
                 let bucket = this.storage[index]
                 if (!bucket) {
                     // 没有桶，返回null
@@ -75,10 +75,41 @@
                 }
                 return null
             }
+            // 删除操作
+            delete(key) {
+                const index = this.hashFun(key, this.limit)
+                let bucket = this.storage[index]
+                if (!bucket) {
+                    // 没有桶，返回null
+                    return null
+                }
+                for (let i = 0; i < bucket.length; i++) {
+                    if (bucket[i][0] === key) {
+                        // 删除元素
+                        bucket.splice(i,1)
+                        this.count--
+                        return true
+                    }
+                }
+                return null
+            }
+            // 判断哈希表是否为空
+            isEmpty() {
+                return this.count === 0
+            }
+            // 获取元素个数
+            size() {
+                return this.count
+            }
         }
 
         let table = new HashTable()
         table.put('age', 20)
+        table.put('abc', 30)
+        table.put('def', 40)
+        table.put('ghi', 50)
+        table.put('www', 66)
+
         console.log(table);
     </script>
 </body>
