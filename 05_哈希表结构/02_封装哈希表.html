@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哈希表实现</title>
+</head>
+
+<body>
+    <script>
+        class HashTable {
+            // 存放元素
+            storage = []
+            // 记录当前已经存放几个元素
+            count = 0
+            // 记录数组的长度
+            limit = 7
+
+            // 方法
+            // 哈希函数
+            hashFun(str, size) {
+                // 定义hashCode变量
+                let hashCode = 0
+
+                // 霍纳算法，计算hashCode的值
+                // str = 'cats'
+                for (let i = 0; i < str.length; i++) {
+                    hashCode = (hashCode + str.charCodeAt(i)) * 37
+                }
+
+                // 取余操作
+                const index = hashCode % size
+
+                return index
+            }
+        
+        }
+    </script>
+</body>
+
+</html>
