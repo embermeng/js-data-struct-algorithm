@@ -57,7 +57,13 @@
                 }
                 // 新增数据
                 bucket.push([key, value])
-                this.count ++
+                this.count++
+                // 判断是否需要扩容
+                if (this.count > this.limit * 0.75) {
+                    const newSize = this.limit * 2
+                    const newPrime = this.getPrime(newSize)
+                    this.resize(newPrime)
+                }
             }
             // 获取操作
             get(key) {
@@ -86,8 +92,14 @@
                 for (let i = 0; i < bucket.length; i++) {
                     if (bucket[i][0] === key) {
                         // 删除元素
-                        bucket.splice(i,1)
+                        bucket.splice(i, 1)
                         this.count--
+                        // 缩小容量
+                        if (this.limit > 7 && this.count < this.limit * 0.25) {
+                            const newSize = Math.floor(this, limit / 2)
+                            const newPrime = this.getPrime(newSize)
+                            this.resize(newPrime)
+                        }
                         return true
                     }
                 }
@@ -100,6 +112,43 @@
             // 获取元素个数
             size() {
                 return this.count
+            }
+            // 改变容量
+            resize(newLimit) {
+                // 保存旧数组内容
+                let oldStorage = this.storage
+                // 重置所有属性
+                this.storage = []
+                this.count = 0
+                this.limit = newLimit
+                // 遍历旧哈希表里所有的bucket
+                oldStorage.forEach((bucket) => {
+                    // 判断bucket是否为undefined，有数据才执行复制操作
+                    if (bucket && bucket.length > 0) {
+                        bucket.forEach((item) => {
+                            this.put(item[0], item[1])
+                        })
+                    }
+                })
+
+            }
+            // 判断是否是质数
+            isPrime(num) {
+                // 获取平方根
+                let sqrt = parseInt(Math.sqrt(num))
+                for (let i = 2; i < sqrt; i++) {
+                    if (num % i === 0) {
+                        return false
+                    }
+                }
+                return true
+            }
+            // 获取质数的方法
+            getPrime(num) {
+                while(!this.isPrime(num)) {
+                    num++
+                }
+                return num
             }
         }
 
