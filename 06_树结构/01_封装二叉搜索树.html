@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二叉搜索树</title>
+</head>
+
+<body>
+    <script>
+        class BinarySearchTree {
+            root = null
+
+            // 创建节点
+            createNode(key) {
+                return {
+                    key,
+                    left: null,
+                    right: null
+                }
+            }
+            /* 
+                操作方法
+                    1. insert(key): 向树中插入一个新的键
+                    2. search(key): 在书中查找一个键，如果存在，返回true，反之返回false
+                    3. inOrderTraverse: 通过中序遍历方式遍历所有节点
+                    4. preOrderTraverse: 通过先序遍历方式遍历所有节点
+                    5. postOrderTraverse: 通过后序遍历方式遍历所有节点
+                    6. min: 返回树中最小的键
+                    7. max: 返回树中最大的键
+                    8. remove(key): 从树中移除某个键
+            */
+            // 1. 向树中插入一个新的键
+            insert(key) {
+                let node = this.createNode(key)
+                // 判断根节点是否有值
+                if (this.root === null) {
+                    this.root = node
+                } else {
+                    this.searchPosition(this.root, node)
+                }
+            }
+            // 寻找插入位置的静态方法
+            searchPosition(node, newNode) {
+                if (newNode.key < node.key) {
+                    // 向左查找
+                    if (node.left === null) {
+                        node.left = newNode
+                    } else {
+                        this.searchPosition(node.left, newNode)
+                    }
+                } else if (newNode.key > node.key) {
+                    // 向右查找
+                    if (node.right === null) {
+                        node.right = newNode
+                    } else {
+                        this.searchPosition(node.right, newNode)
+                    }
+                } else {
+                    // 节点key相同
+                    throw new Error('二叉树中已存在此节点！')
+                }
+            }
+        }
+
+        let bst = new BinarySearchTree()
+
+        bst.insert(11)
+        bst.insert(7)
+        bst.insert(15)
+        bst.insert(5)
+        bst.insert(3)
+        bst.insert(9)
+        bst.insert(8)
+        bst.insert(10)
+        bst.insert(13)
+        bst.insert(12)
+        
+        console.log(bst);
+    </script>
+</body>
+
+</html>
