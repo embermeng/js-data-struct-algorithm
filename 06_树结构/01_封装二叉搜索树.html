@@ -111,13 +111,13 @@
                     handler(node.key)
                 }
             }
-            
+
             // 5. 返回树中最小的键
             min() {
                 let node = this.root
                 if (node === null)
                     return null
-                while (node.left !== null) 
+                while (node.left !== null)
                     node = node.left
                 return node.key
             }
@@ -127,9 +127,49 @@
                 let node = this.root
                 if (node === null)
                     return null
-                while (node.right !== null) 
+                while (node.right !== null)
                     node = node.right
                 return node.key
+            }
+
+            // 2. 搜索
+            search(key) {
+                let node = this.root
+
+                while (node !== null) {
+                    if (key < node.key) {
+                        node = node.left
+                    } else if (key > node.key) {
+                        node = node.right
+                    } else {
+                        return true
+                    }
+                }
+                return false
+            }
+
+            // 2. 删除节点
+            remove(key) {
+                // 先找到节点
+                let cur = this.root
+                let parent = null
+                let isLeftChild = true
+                while (cur.key !== key) {
+                    parent = cur
+                    if (key < cur.key) {
+                        isLeftChild = true
+                        cur = cur.left
+
+                    } else {
+                        isLeftChild = false
+                        cur = cur.right
+                    }
+                    // 已经找到最后的节点，依然没有找到
+                    if (cur === null) throw new Error("没有找到删除的元素！")
+                }
+
+                // 找到cur.key === key，根据对应的情况删除节点
+
             }
         }
 
