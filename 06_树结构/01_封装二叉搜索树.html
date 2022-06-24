@@ -153,7 +153,7 @@
                 // 先找到节点
                 let cur = this.root
                 let parent = null
-                let isLeftChild = true
+                let isLeftChild = true  // cur是否为parent的左孩子
                 while (cur.key !== key) {
                     parent = cur
                     if (key < cur.key) {
@@ -169,7 +169,35 @@
                 }
 
                 // 找到cur.key === key，根据对应的情况删除节点
-
+                // 1) 删除的节点是叶子节点
+                if (cur.left === null && cur.right === null) {
+                    if (cur === this.root) {
+                        this.root = null
+                    } else if (isLeftChild) {
+                        parent.left = null
+                    } else {
+                        parent.right = null
+                    }
+                }
+                // 2) 删除的节点有一个子节点
+                else if (cur.right === null) {
+                    if (cur === this.root) {
+                        this.root = cur.left
+                    } else if (isLeftChild) {
+                        parent.left = cur.left
+                    } else {
+                        parent.right = cur.left
+                    }
+                } else if (cur.left === null) {
+                    if (cur === this.root) {
+                        this.root = cur.right
+                    } else if (isLeftChild) {
+                        parent.left = cur.right
+                    } else {
+                        parent.right = cur.right
+                    }
+                }
+                // 3) 删除的节点有两个子节点
             }
         }
 
