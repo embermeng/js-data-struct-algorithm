@@ -168,7 +168,7 @@
                     if (cur === null) throw new Error("没有找到删除的元素！")
                 }
 
-                // 找到cur.key === key，根据对应的情况删除节点
+                // 找到了cur.key === key，根据对应的情况删除节点
                 // 1) 删除的节点是叶子节点
                 if (cur.left === null && cur.right === null) {
                     if (cur === this.root) {
@@ -198,6 +198,39 @@
                     }
                 }
                 // 3) 删除的节点有两个子节点
+                else {
+                    // 获取后继节点
+                    let nextNode = this.getNextNode(cur)
+                    // 判断是否是根节点
+                    if (cur === this.root) {
+                        this.root = nextNode
+                    } else if (isLeftChild) {
+                        parent.left = nextNode
+                    } else {
+                        parent.right = nextNode
+                    }
+                    // 将被删除节点的左子树赋值给后继节点的left
+                    nextNode.left = cur.left
+                }
+            }
+            // 找后继节点的方法
+            getNextNode(delNode) {
+                // 保存找到的后继节点
+                let nextNode = delNode
+                let cur = delNode.right
+                let nextNodeParent = delNode
+                // 循环查找最小节点
+                while (cur !== null) {
+                    nextNodeParent = nextNode
+                    nextNode = cur
+                    cur = cur.left
+                }
+                // 判断寻找的后继节点是否直接就是delNode的右节点（即被删除的节点只有一个右叶子节点）
+                if (nextNode !== delNode.right) {
+                    nextNodeParent.left = nextNode.right
+                    nextNode.right = delNode.right
+                }
+                return nextNode
             }
         }
 
