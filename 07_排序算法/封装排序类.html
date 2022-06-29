@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装排序类</title>
+</head>
+
+<body>
+    <script>
+        class ArrayList {
+            array = []
+
+            constructor(arr) {
+                if (Array.isArray(arr)){
+                    this.array = arr
+                } else {
+                    throw new Error("需要传入一个数组才能创建实例！")
+                }
+            }
+            // 方法
+            // 将数据插入数组
+            insert(item) {
+                this.array.push(item)
+            }
+            // toString
+            toString() {
+                return this.array.join('-')
+            }
+            // 冒泡排序
+
+            // 选择排序
+
+            // 插入排序
+
+            // 希尔排序
+
+            // 快速排序
+        }
+
+        let myArr = new ArrayList([99,11,88,22,77,33,66,44,55,100])
+        console.log(myArr.toString());
+    </script>
+</body>
+
+</html>
