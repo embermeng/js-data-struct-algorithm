@@ -6,9 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>封装排序类</title>
+    <style>
+        #show {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #show > span {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="show">
+        <span id="span">1</span>
+    </div>
     <script>
         class ArrayList {
             array = []
@@ -117,7 +131,8 @@
         // myArr.selectSort()
         // myArr.insertSort()
         myArr.shellSort()
-        console.log(myArr.toString());
+
+        document.getElementById('span').innerText = myArr.toString()
     </script>
 </body>
 
