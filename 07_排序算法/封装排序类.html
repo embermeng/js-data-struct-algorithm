@@ -35,7 +35,7 @@
                 this.array[m] = this.array[n]
                 this.array[n] = temp
             }
-            // 冒泡排序
+            // 1. 冒泡排序
             bubbleSort() {
                 const length = this.array.length
                 let temp
@@ -48,20 +48,22 @@
                     }
                 }
             }
-            // 选择排序
+            // 2. 选择排序
             selectSort() {
                 const length = this.array.length
                 for (let j = 0; j < length - 1; j++) {
-                    let min_index = j
+                    let min_index = j  // min_index是最小值元素的下标
+                    // 获取后续元素中最小值的下标
                     for (let i = min_index + 1; i < length; i++) {
                         if (this.array[min_index] > this.array[i]) {
                             min_index = i
                         }
                     }
+                    // 将最小值的元素放到前面去
                     this.swap(min_index, j)
                 }
             }
-            // 插入排序
+            // 3. 插入排序
             insertSort() {
                 const length = this.array.length
                 // 探查数组前面多少个元素的有序的，并获取有序的最大下标值
@@ -75,6 +77,7 @@
                     let temp = this.array[i]
                     let j = i
                     while (this.array[j - 1] > temp && j > 0) {
+                        // 把元素往后移
                         this.array[j] = this.array[j - 1]
                         j--
                     }
@@ -82,15 +85,38 @@
                     this.array[j] = temp
                 }
             }
-            // 希尔排序
+            // 4. 希尔排序
+            shellSort() {
+                const length = this.array.length
+                // 获取初始化的增量
+                let gap = Math.floor(length / 2)
+                // while循环，让gap不断的减小，每次分组后的插入排序完毕后，就让gap减小
+                while (gap >= 1) {
+                    // 以gap作为间隔，进行分组，在分组中进行插入排序，当i++后，就找到下一个组再进行插入排序
+                    for (let i = gap; i < length; i++) {
+                        let temp = this.array[i]
+                        let j = i
+                        // 在当前的组内进行插入排序
+                        while (this.array[j - gap] > temp && j > gap - 1) {
+                            this.array[j] = this.array[j - gap]
+                            j -= gap
+                        }
+                        // 将temp放置在j的位置（最小是下标为0）
+                        this.array[j] = temp
+                    }
+                    // 让gap不断缩小，再对所有新的分组进行插入排序。最后gap为1时就是最后一次的插入排序了
+                    gap = Math.floor(gap / 2)
+                }
 
-            // 快速排序
+            }
+            // 5. 快速排序
         }
 
-        let myArr = new ArrayList([99, 11, 88, 22, 77, 33, 66, 44, 55, 100])
+        let myArr = new ArrayList([99, 11, 88, 22, 77, 33, 66, 44, 55, 100, 0])
         // myArr.bubbleSort()
         // myArr.selectSort()
-        myArr.insertSort()
+        // myArr.insertSort()
+        myArr.shellSort()
         console.log(myArr.toString());
     </script>
 </body>
