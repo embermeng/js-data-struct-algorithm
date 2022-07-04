@@ -12,8 +12,7 @@
     <script>
         let arr = [1, 1, "1", "1", true, true, "true", {}, {}, "{}", null, null, undefined, undefined]
 
-        let setArr = new Set(arr)
-        console.log(Array.from(setArr));
+        console.log(Array.from(new Set(arr)));
         
     </script>
 </body>
