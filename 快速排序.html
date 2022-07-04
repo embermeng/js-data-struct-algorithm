@@ -30,9 +30,9 @@
                 // 3. 开始循环进行查找和交换的操作
                 while (true) {
                     // leftPointer指向大于枢纽的元素
-                    while (array[++leftPointer] < pivot)
+                    while (array[++leftPointer] < pivot) {}
                     // rightPointer指向小于枢纽的元素
-                    while (array[--rightPointer] > pivot)
+                    while (array[--rightPointer] > pivot) {}
                     // 此时找到了正确的左右两个元素，判断指针位置的情况
                     if (leftPointer < rightPointer) {
                         // 交换左右两个元素
