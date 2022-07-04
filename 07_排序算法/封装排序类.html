@@ -127,7 +127,7 @@
             // 5. 快速排序
             // 选择枢纽
             middle(left, right) {
-                let center = Math.floor(left + right) / 2
+                let center = Math.floor((left + right) / 2)
                 // 判断大小，并进行交换
                 if (this.array[left] > this.array[right]) {
                     this.swap(left, right)
