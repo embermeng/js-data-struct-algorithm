@@ -157,11 +157,9 @@
                 // 4. 开始进行查找和交换操作
                 while (true) {
                     // 找到左边的大于枢纽的元素
-                    while (this.array[++leftPointer] < pivot) {
-                    }
+                    while (this.array[++leftPointer] < pivot) {}
                     // 找到右边的小于枢纽的元素
-                    while (this.array[--rightPointer] > pivot) {
-                    }
+                    while (this.array[--rightPointer] > pivot) {}
                     if (leftPointer < rightPointer) {
                         this.swap(leftPointer, rightPointer)
                     } else {
