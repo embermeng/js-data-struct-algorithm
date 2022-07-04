@@ -11,59 +11,65 @@
 <body>
     <script>
         function quickSort(arr) {
+            let array = arr
+
             // 递归排序的函数
-            quick(0, arr.length - 1, arr)
-        }
-        // 递归排序的函数
-        function quick(left, right, arr) {
-            // 递归的结束条件
-            if (left >= right) return
-            // 1. 获取枢纽
-            let pivot = middle(left, right, arr)
-            // 2. 给左右指针初始值
-            let leftPointer = left
-            let rightPointer = right - 1
-            // 3. 开始循环进行查找和交换的操作
-            while (true) {
-                // leftPointer指向大于枢纽的元素
-                while(arr[++leftPointer] < pivot)
-                // rightPointer指向小于枢纽的元素
-                while(arr[--rightPointer] > pivot)
-                // 此时找到了正确的左右两个元素，判断指针位置的情况
-                if (leftPointer < rightPointer) {
-                    // 交换左右两个元素
-                    swap(leftPointer, rightPointer, arr)
-                } else {
-                    break
+            quick(0, array.length - 1)
+
+            // 递归排序的函数
+            function quick(left, right) {
+                // 递归的结束条件
+                if (left >= right) return
+                // 1. 获取枢纽
+                let pivot = middle(left, right)
+                console.log(pivot);
+                // 2. 给左右指针初始值
+                let leftPointer = left
+                let rightPointer = right - 1
+
+                // 3. 开始循环进行查找和交换的操作
+                while (true) {
+                    // leftPointer指向大于枢纽的元素
+                    while (array[++leftPointer] < pivot)
+                    // rightPointer指向小于枢纽的元素
+                    while (array[--rightPointer] > pivot)
+                    // 此时找到了正确的左右两个元素，判断指针位置的情况
+                    if (leftPointer < rightPointer) {
+                        // 交换左右两个元素
+                        swap(leftPointer, rightPointer)
+                    } else {
+                        break
+                    }
                 }
+
+                // 4. 将枢纽放到正确的位置
+                swap(leftPointer, right - 1)
+                // 5. 分而治之
+                quick(left, leftPointer - 1)
+                quick(leftPointer + 1, right)
             }
-            // 4. 将枢纽放到正确的位置
-            swap(leftPointer, right - 1 , arr)
-            // 5. 分而治之
-            quick(left, leftPointer - 1, arr)
-            quick(leftPointer + 1, right, arr)
-        }
-        // 找到枢纽的函数
-        function middle(left, right, arr) {
-            let center = Math.floor(left + right) / 2
-            if (arr[left] > arr[right]) {
-                swap(left, right, arr)
+            // 找到枢纽的函数
+            function middle(left, right) {
+                let center = Math.floor((left + right) / 2)
+                if (array[left] > array[right]) {
+                    swap(left, right)
+                }
+                if (array[left] > array[center]) {
+                    swap(left, center)
+                }
+                if (array[center] > array[right]) {
+                    swap(center, right)
+                }
+                // 将枢纽换到right - 1的位置
+                swap(center, right - 1)
+                return array[right - 1]
             }
-            if (arr[left] > arr[center]) {
-                swap(left, center, arr)
+            // 交换位置
+            function swap(i, j) {
+                let temp = array[i]
+                array[i] = array[j]
+                array[j] = temp
             }
-            if (arr[center] > arr[right]) {
-                swap(center, right, arr)
-            }
-            // 将枢纽换到right - 1的位置
-            swap(center, right - 1)
-            return arr[right - 1]
-        }
-        // 交换位置
-        function swap (i, j, arr) {
-            let temp = arr[i]
-            arr[i] = arr[j]
-            arr[j] = temp
         }
         let array = [99, 11, 88, 22, 77, 33, 66, 44, 55, 100, 0]
         quickSort(array)
