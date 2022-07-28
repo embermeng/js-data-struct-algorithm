@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * 完善 下方 findAllParentDepts 函数 , 返回 某个id 的所有的上层节点的id数组
+         * 如  'U2dPWLOxD-Gh7lqt4mw2Z'   =>   ['3E2X3qZA0db3lonc5h_Xs','WSOslzzUg-OfyPGGVidqi']
+         * */
+        let deptTree = [
+            {
+                id: "WSOslzzUg-OfyPGGVidqi",
+                title: "擎创科技",
+                children: [
+                    {
+                        id: "3E2X3qZA0db3lonc5h_Xs",
+                        title: "产品一部",
+                        children: [
+                            {
+                                id: "U2dPWLOxD-Gh7lqt4mw2Z",
+                                title: "一部测试组",
+                                children: [
+                                    {
+                                        id: "OcbCKlsNwa1yV4hV4kl2q",
+                                        title: "测试一组",
+                                        children: [
+                                            {
+                                                id: "QjNB3D_iZPA0UuPkeKKFx",
+                                                title: "王凯",
+                                            },
+                                            {
+                                                id: "eTcPMpVqHPqWeov1mOP5Q",
+                                                title: "王龙",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                id: "OU3V1152OtmgWf4_pO8dT",
+                                title: "一部设计部",
+                                children: [
+                                    {
+                                        id: "BGE-fSUdl7WxYLCV4PwoV",
+                                        title: "小李",
+                                    },
+                                    {
+                                        id: "wPd-EoVwD9y96IMXEazne",
+                                        title: "小张",
+                                    },
+                                    {
+                                        id: "uimLbEVgrtHgq8B_UoLZj",
+                                        title: "小王",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        id: "41ngVYWBCRpcrzPaaFyp3",
+                        title: "产品二部",
+                    },
+                ],
+            },
+        ];
+        /**
+         * @param {Array} data  部门树
+         * @param {string} id   部门树中某个节点id
+         * @returns {Array<string>}     所有的上层节点的id数组
+         */
+        function findAllParentDepts(data, id) {
+            let result = []
+            const recursion = function (obj, id) {
+                if (obj.length) {
+                    obj.forEach(item => {
+                        if (item.children && item.children.length) {
+                            if (item.children.some(cur => cur.id === id)) {  //这里利用some筛选子级有没有符合条件的，有就重新递归，没有就继续递归
+                                result.unshift(item.id)
+                                //重新递归
+                                recursion(data, item.id)
+                            } else {
+                                //继续递归
+                                recursion(item.children, id)
+                            }
+                        } else { return }
+                    })
+                }
+            }
+            recursion(data, id)
+            return result
+        }
+        console.log(
+            "🚀  findAllParentDepts 测试结果:",
+            findAllParentDepts(deptTree, "OcbCKlsNwa1yV4hV4kl2q")
+        );
+    </script>
+</body>
+
+</html>

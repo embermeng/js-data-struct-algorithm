@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var a = [  //数组树型结构
+            {
+                dir: '',
+                no: '11111'
+            },
+            {
+                dir: [
+                    {
+                        dir: '',
+                        no: '22221'
+                    },
+                    {
+                        dir: [
+                            {
+                                dir: '',
+                                no: '33332'
+                            }
+                        ],
+                        no: '22222'
+                    }
+                ],
+                no: '11112'
+            },
+            {
+                dir: [
+                    {
+                        dir: [
+                            {
+                                dir: [],
+                                no: '33333'
+                            }
+                        ],
+                        no: '22223'
+                    }
+                ],
+                no: '11113'
+            },
+            {
+                dir: [
+                    {
+                        dir: [
+                            {
+                                dir: [
+                                    {
+                                        dir: [],
+                                        no: '44444'
+                                    }
+                                ],
+                                no: '33334'
+                            }
+                        ],
+                        no: '22224'
+                    }
+                ],
+                no: '11114'
+            },
+        ]
+        // 数组就是类似这种结构，然后我需要拿后台返回的某个子集no，查找所有相关联父级no，并把它们放到一个集合里面，下面直接贴代码：
+        var b = '44444'    //这就相当于从后台返回的id值
+        var vArr = []    //用来接收相关联父级id的集合
+        function shellArr(obj, id) {
+            if (obj.length) {
+                obj.forEach(item => {
+                    if (item.dir && item.dir.length) {
+                        if (item.dir.some(cur => cur.no === id)) {  //这里利用some筛选子级有没有符合条件的，有就重新递归，没有就继续递归
+                            vArr.unshift(item.no)
+                            //重新递归
+                            shellArr(a, item.no)
+                        } else {
+                            //继续递归
+                            shellArr(item.dir, id)
+                        }
+                    } else { return }
+                })
+            }
+        }
+        shellArr(a, b);       //调用，传入a为要筛选的数组，传入b为后台返回的id值
+        console.log(vArr)    //打印所有相关父级集合
+    </script>
+</body>
+
+</html>
